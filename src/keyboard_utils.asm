@@ -9,10 +9,9 @@
 	kb_read_row: .word 0xFFFF0012
 	kb_recieve_key: .word 0xFFFF0014
 
-# Codificação display: 0     1     2     3     4     5     6     7     8     9	
-	seg_table: .byte 0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F
+# Codificação display: 0     1     2     3     4     5     6     7     8     9     P
+	seg_table: .byte 0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F, 0x67
 	
-
 .text
 .globl CLEAR_MEMORY, DISPLAY_NUMBER, GET_INPUT
 
