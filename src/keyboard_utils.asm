@@ -13,7 +13,7 @@
 	seg_table: .byte 0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F, 0x67
 	
 .text
-.globl CLEAR_MEMORY, DISPLAY_NUMBER, GET_INPUT
+.globl CLEAR_MEMORY, CLEAR_DISPLAY, DISPLAY_SYMBOL, GET_INPUT, display_units, display_tens
 
 # Limpa a memória para que não ocorra undefined behaviour, sem argumentos e sem retorno
 # Deve ser chamada no começo do programa
@@ -29,27 +29,21 @@ CLEAR_MEMORY:
 	
 	jr $ra
 
+# Desliga todos os segmentos do display, sem argumentos e sem retorno
+CLEAR_DISPLAY: 
+	lw $t0, display_units
+	sb $zero, ($t0)
+	lw $t0, display_tens
+	sb $zero, ($t0)
 
-# Args: $a0 = endereço do display, $a1 = valor para escrever, $a2 = 0 ou 1 liga o ponto do display
-DISPLAY_NUMBER:
-	addi $sp, $sp, -4
-	sw $s0, ($sp)
-
+# Args: $a0 = endereço do display, $a1 = valor para escrever
+DISPLAY_SYMBOL:
 	la $t0 seg_table 
 	addu $t0, $t0, $a1 # Calcular o offset da lista de valores
 	lb $s0, ($t0) # Carregar =o valor a ser escrito
 	
-	# Escrever o ponto caso $a2 == 1
-	move $t0, $a2
-	sll $t0, $t0, 7
-	or $s0, $s0, $t0
-	
 	# Escrever o código para o display
 	sb $s0, ($a0)
-	
-	lw $s0, ($sp)
-	addi $sp, $sp, 4
-
 	jr $ra
 
 
