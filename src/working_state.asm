@@ -1,0 +1,17 @@
+.text
+.globl ENTER_STATE
+
+
+ENTER_WORKING_STATE:
+
+# Vai para PAUSED_STATE caso abra a porta
+WORKING_STATE:
+	
+
+	
+	
+	j WORKING_STATE
+
+
+DECREASE_TIME:
+	
