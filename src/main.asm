@@ -3,8 +3,9 @@
 # 
 # ---------------------------------------------
 .data
-	.globl seconds: .byte 0
-	.globl timer: .byte 0
+	.globl seconds, timer
+	seconds: .byte 0
+	timer: .byte 0
 .text
 .globl MAIN	
 
