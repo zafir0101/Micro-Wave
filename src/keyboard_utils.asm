@@ -17,8 +17,7 @@
 				0x14, 0x24, 0x44, 0x84, 0x18, 0x28, 0x48, 0x88,
 	
 .text
-.globl INIT_GUI, CLEAR_DISPLAY, GET_INPUT, DISPLAY_NUMBER, DISPLAY_OPEN,
-	   IS_KEY_PRESSED, WAIT_NO_KEY_PRESSED
+.globl INIT_GUI, CLEAR_DISPLAY, GET_INPUT, DISPLAY_NUMBER, DISPLAY_OPEN, IS_KEY_PRESSED, WAIT_NO_KEY_PRESSED
 
 # Limpa a memória para que não ocorra undefined behaviour, sem argumentos e sem retorno
 # Deve ser chamada no começo do programa
