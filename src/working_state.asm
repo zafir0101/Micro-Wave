@@ -12,7 +12,8 @@ ENTER_WORKING_STATE:
 	lw $s2, seconds		# Carrega o valor do timer em segundos no registrador de salvamento
 	li $s1, 0		# Inicializa o registrador de salvamento que representa o tempo do sistema que e será atualizado diversas vezes
 	li $s0, 0		# Inicializa o registrador de salvamento que representa o tempo do sistema que será carregado apenas uma vez
-	
+
+# Descreve a lógica do estado de funcionamento
 WORKING_STATE:
 	# Mostra o timer atual no display
 	move $a0, $s2
