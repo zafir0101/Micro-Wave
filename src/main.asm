@@ -3,13 +3,15 @@
 # 
 # ---------------------------------------------
 .data
-	.globl seconds: .byte 0
-	.globl timer: .byte 0
+	.globl seconds, timer, open
+	seconds: .word 0
+	timer: .word 0
+	open: .word 0
 .text
 .globl MAIN	
 
 MAIN:
 	jal INIT_GUI
-	jal WAIT_STATE
+	jal ENTER_WAIT_STATE
 		
 	
