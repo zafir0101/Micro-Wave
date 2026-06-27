@@ -9,7 +9,7 @@
 .text
 .globl MAIN	
 
-# Procedimento Main, não recebe argumentos, não posssui retorno
+# Procedimento global Main. Não recebe argumentos, não posssui retorno
 MAIN:
 	jal INIT_GUI		# Limpa a memória
 	jal ENTER_WAIT_STATE	# Realiza a transição para o estado de espera

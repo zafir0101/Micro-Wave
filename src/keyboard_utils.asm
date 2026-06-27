@@ -1,6 +1,6 @@
 # ---------------------------------------------
 # Os procedimentos desse arquivo servem para fazer a inter-op com
-# o Digital Lab Sim
+# o Digital Lab Sim.
 # ---------------------------------------------
 .data
 	display_units: .word 0xFFFF0010
