@@ -20,7 +20,7 @@ WAIT_STATE:
 	add $a0, $a0, $s0
 	jal DISPLAY_NUMBER
 	
-	# Manipula o input do Digital Lab Sim, reedirecionando para os procedimentos corretos
+	# Manipula o input do Digital Lab Sim, redirecionando para os procedimentos corretos
 	HANDLE_INPUT:  
 		# Obtém a entrada do teclado e espera o botão ser solto
 		jal GET_INPUT
