@@ -9,11 +9,6 @@
 ENTER_PAUSE_STATE:
 	jal WAIT_NO_KEY_PRESSED	# Verifica se nenhuma tecla está apertada (Evita transições indesejadas)
 	
-	# Mostra o timer atual no display (Para o caso em que a porta é aberta enquanto está no estado pause)
-	lw $t0, seconds
-	move $a0, $t0
-	jal DISPLAY_NUMBER
-	
 # Descreve a lógica do estado de pausa
 PAUSE_STATE:
 	# Direciona para o caso que pausou o micro-ondas
@@ -62,4 +57,11 @@ PAUSE_STATE:
 		
 		beq $v0, $zero, LOOP # Volta ao tratamento do pause com B caso o usuário tenha fechado a porta
 		
-		j ENTER_PAUSE_STATE # Retorna quando fecha a porta
+		jal WAIT_NO_KEY_PRESSED	# Verifica se nenhuma tecla está apertada (Evita transições indesejadas)
+		
+		# Mostra o timer atual no display (Para o caso em que a porta é aberta enquanto está no estado pause)
+		lw $t0, seconds
+		move $a0, $t0
+		jal DISPLAY_NUMBER
+		
+		j PAUSE_STATE # Retorna quando fecha a porta
