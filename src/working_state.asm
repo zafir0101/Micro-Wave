@@ -8,7 +8,6 @@
 
 # Procedimento glocbal que inicializa as variáveis. Não recebe argumento, não possui retorno
 ENTER_WORKING_STATE:
-	jal WAIT_NO_KEY_PRESSED	# Verifica se nenhuma tecla está apertada (Evita transições indesejadas)
 	lw $s2, seconds		# Carrega o valor do timer em segundos no registrador de salvamento
 	li $s1, 0		# Inicializa o registrador de salvamento que representa o tempo do sistema que e será atualizado diversas vezes
 	li $s0, 0		# Inicializa o registrador de salvamento que representa o tempo do sistema que será carregado apenas uma vez
