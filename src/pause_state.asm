@@ -8,7 +8,12 @@
 # Procedimento global chamado pelos outros estados. Não recebe argumento, não possui retorno
 ENTER_PAUSE_STATE:
 	jal WAIT_NO_KEY_PRESSED	# Verifica se nenhuma tecla está apertada (Evita transições indesejadas)
-
+	
+	# Mostra o timer atual no display (Para o caso em que a porta é aberta enquanto está no estado pause)
+	lw $t0, seconds
+	move $a0, $t0
+	jal DISPLAY_NUMBER
+	
 # Descreve a lógica do estado de pausa
 PAUSE_STATE:
 	# Direciona para o caso que pausou o micro-ondas
@@ -19,15 +24,15 @@ PAUSE_STATE:
 	
 	# Se o usuário pausou pressionando B, esse procedimento é acionado
 	B_CASE:
-		# Verifica se o usuário não apertou A, com a intenção de retomar o funcionamento
-		li $a0, 10
-		jal IS_KEY_PRESSED
-		beq $v0, 1, ENTER_WORKING_STATE
+		# Obtém a entrada do teclado e espera o botão ser solto
+		jal GET_INPUT
+		move $s2, $v0 # $v0 é usado pelo procedimento seguinte, portanto guardamos em $s2
+		jal WAIT_NO_KEY_PRESSED
 		
-		# Verifica se o usuário não apertou B, com a inteção de cancelar o funcionamento
-		li $a0, 11
-		jal IS_KEY_PRESSED
-		beq $v0, 1, MAIN
+		# Reedireciona de acordo com a entrada recebida
+		beq $s2, 10, ENTER_WORKING_STATE		# A apertado
+		beq $s2, 11, ENTER_WAIT_STATE			# B apertado (cancela a escolha)
+		beq $s2, 12, OPEN_DOOR_B_CASE			# C apertado (abre a porta)
 		
 		j B_CASE
 	
@@ -46,4 +51,15 @@ PAUSE_STATE:
 		
 		beq $v0, 1, ENTER_WORKING_STATE # Retoma o funcionamento
 		
-	
+	# É usado quando a porta é aberta. Não atualiza a variável global `open`, pois é necessário fechar a porta para sair desse procedimento.
+	OPEN_DOOR_B_CASE:
+		jal DISPLAY_OPEN # Mostra "OP" no display
+		
+		LOOP: 
+		# Verifica se o usuário fechou a porta
+		li $a0, 12
+		jal IS_KEY_PRESSED
+		
+		beq $v0, $zero, LOOP # Volta ao tratamento do pause com B caso o usuário tenha fechado a porta
+		
+		j ENTER_PAUSE_STATE # Retorna quando fecha a porta
